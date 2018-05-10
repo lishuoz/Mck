@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,24 @@ Route::post('/upload-image', function(Request $request){
 
 
 Route::post('/test', function(Request $request){
-	return response()->json('S3 Uploaded Succeed', 200);
+	return print_r($request->all());
 });
 
+Route::get('/test', function(Request $request){
+	// $product = Product::with()
+	return response(200);
+
+});
+
+
+Route::post('/product-images', 'ImageController@storeProductImages');
+Route::post('/additional-images', 'ImageController@storeAdditionalImages');
+Route::post('/other-images', 'ImageController@storeOtherImages');
+
 Route::get('/user/{id}/products', 'ProductController@getUserProducts');
+
+Route::post('/users/edit', 'UserController@editProfile');
+Route::post('/users/verify', 'UserController@verify');
 
 Route::middleware(['auth:api'])->get('/user', function (Request $request) {
 	return $request->user();
@@ -33,6 +48,8 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{id}', 'ProductController@show');
+Route::delete('/products/{id}', 'ProductController@destroy');
+
 Route::post('/products', 'ProductController@store');
 Route::post('/images', 'ImageController@store');
 

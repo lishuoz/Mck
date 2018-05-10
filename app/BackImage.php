@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MatchImage extends Model
+class BackImage extends Model
 {
 	protected $fillable = [
-		'path', 'thumbnail_path'
+		'thumbnail_path', 'small_path', 'medium_path', 'large_path'
 	];
 }

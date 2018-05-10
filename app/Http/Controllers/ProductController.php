@@ -25,7 +25,9 @@ class ProductController extends Controller
         ->with('level')
         ->with('loas')
         ->with('sizes')
-        ->with('productImage')
+        ->with('frontImage')
+        ->with('backImage')
+        ->where('status', 'active')
         ->get();
     }
 
@@ -48,6 +50,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
+        // $validatedData = $request->validate([
+        //     'user_id' => 'required',
+        //     'team' => 'required',
+        //     'edition' => 'required',
+        //     'level' => 'required',
+        //     'forSale' => 'required',
+        //     'players' => 'required',
+        //     'seasons' => 'required',
+        //     'sizes' => 'required',
+        //     'items' => 'required',
+        //     'loas' => 'required',
+        //     'note' => 'string|max:255',
+        //     'description' => 'string|max:255',
+        // ]);
+
         $product = new Product;
         if ($request->has('price')){
             $product->price = $request->price;
@@ -67,17 +84,6 @@ class ProductController extends Controller
         $product->sizes()->attach($request->sizes);
         $product->items()->attach($request->items);
         $product->loas()->attach($request->loas);
-        // foreach($request->file('photo') as $photo){
-        //     $s3 = Storage::disk('s3');
-        //     $fileName = time().'_'.$photo->getClientOriginalName();
-        //     $s3->put($fileName, file_get_contents($photo), 'public');
-        //     $product->images()->create([
-        //         'path' => env('AWS_URL').$fileName,
-        //         'name' => $fileName,
-        //         'thumbnail_path' => 'thumbnail_'.$fileName,
-        //     ]);
-        // }
-        // $product = Product::first();
         return $product;
     }
 
@@ -98,8 +104,8 @@ class ProductController extends Controller
         ->with('level')
         ->with('loas')
         ->with('sizes')
-        ->with('productImage')
-        ->with('matchImages')
+        ->with('frontImage')
+        ->with('backImage')
         ->with('otherImages')
         ->with('loaImages')
         ->findOrFail($id);
@@ -122,8 +128,8 @@ class ProductController extends Controller
      ->with('level')
      ->with('loas')
      ->with('sizes')
-     ->with('productImage')
-     ->with('matchImages')
+     ->with('frontImage')
+     ->with('backImage')
      ->with('otherImages')
      ->with('loaImages')
      ->where('user_id', $id)
@@ -162,6 +168,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return response()->json('产品删除成功', 200);
     }
 }

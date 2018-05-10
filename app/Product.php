@@ -42,12 +42,16 @@ class Product extends Model
         return $this->belongsToMany('App\Loa');
     }
 
-    public function productImage(){
-        return $this->hasOne('App\ProductImage');
+    public function frontImage(){
+        return $this->hasOne('App\FrontImage');
     }
 
-    public function matchImages(){
-        return $this->hasMany('App\MatchImage');        
+    public function backImage(){
+        return $this->hasOne('App\BackImage');
+    }
+
+    public function levelImages(){
+        return $this->hasMany('App\LevelImage');        
     }
 
     public function loaImages(){

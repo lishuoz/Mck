@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Mail\RegisterConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -15,12 +17,17 @@ class AuthController extends Controller
 			'password' => 'required|string|min:6|confirmed',
 		]);
 
+		$token = time().str_random(25);
+
 		$user = User::create([
 			'name' => $request->name,
 			'email' => $request->email,
-			'password' => bcrypt($request->password)
+			'password' => bcrypt($request->password),
+			'token' => $token
 		]);
 
-		return $user;
+		Mail::to($user)->send(new RegisterConfirmation($token));
+
+		return response()->json($user, 200);
 	}
 }

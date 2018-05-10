@@ -17,7 +17,7 @@ class ItemProductTable extends Migration
            $table->integer('item_id')->unsigned()->nullable();
            $table->foreign('item_id')->references('id')->on('items');
            $table->integer('product_id')->unsigned()->nullable();
-           $table->foreign('product_id')->references('id')->on('products');
+           $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
            $table->timestamps();
        });
     }

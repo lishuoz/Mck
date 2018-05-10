@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMatchImagesTable extends Migration
+class CreateFrontImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateMatchImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('match_images', function (Blueprint $table) {
+        Schema::create('front_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id')->unsigned();
+            $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('path');
+            $table->string('small_path');
+            $table->string('medium_path');
+            $table->string('large_path');
             $table->string('thumbnail_path');
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ class CreateMatchImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('match_images');
+        Schema::dropIfExists('front_images');
     }
 }

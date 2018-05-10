@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoaImagesTable extends Migration
+class CreateLevelImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLoaImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('loa_images', function (Blueprint $table) {
+        Schema::create('level_images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
@@ -32,6 +32,6 @@ class CreateLoaImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loa_images');
+        Schema::dropIfExists('level_images');
     }
 }

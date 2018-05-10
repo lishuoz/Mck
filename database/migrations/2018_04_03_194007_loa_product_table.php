@@ -17,7 +17,7 @@ class LoaProductTable extends Migration
            $table->integer('loa_id')->unsigned()->nullable();
            $table->foreign('loa_id')->references('id')->on('loas');
            $table->integer('product_id')->unsigned()->nullable();
-           $table->foreign('product_id')->references('id')->on('products');
+           $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
            $table->timestamps();
        });
     }
