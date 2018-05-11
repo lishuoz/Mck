@@ -26,7 +26,7 @@ class AuthController extends Controller
 			'token' => $token
 		]);
 
-		Mail::to($user)->send(new RegisterConfirmation($token));
+		// Mail::to($user)->send(new RegisterConfirmation($token));
 
 		return response()->json($user, 200);
 	}
