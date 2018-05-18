@@ -254,6 +254,7 @@ class ImageController extends Controller
 				]);
 			}
 		}
+
 		if($request->has('loaImages')){
 			$loaImages = $request->loaImages;
 
@@ -285,6 +286,7 @@ class ImageController extends Controller
 				]);
 			}
 		}
+		
 		return $product;
 	}
 

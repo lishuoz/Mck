@@ -48,9 +48,18 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{id}', 'ProductController@show');
+Route::patch('/products/{id}', 'ProductController@update');
+// Route::patch('/products/edit', function(Request $request){
+// 		print_r($request->all());
+// });
+
 Route::delete('/products/{id}', 'ProductController@destroy');
 
 Route::post('/products', 'ProductController@store');
+// Route::post('/products', function(Request $request){
+// 	return $request->all();
+// });
+
 Route::post('/images', 'ImageController@store');
 
 Route::get('/players', function (Request $request) {

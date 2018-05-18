@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->integer('level_id')->unsigned()->nullable();
             $table->foreign('level_id')->references('id')->on('levels');
             $table->string('note')->nullable();
-            $table->boolean('forSale');
+            $table->string('forSale');
             $table->string('tradeMethod')->nullable();
             $table->string('quotedMethod')->nullable();
             $table->integer('price')->nullable();

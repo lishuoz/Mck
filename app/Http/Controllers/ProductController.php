@@ -74,7 +74,7 @@ class ProductController extends Controller
         $product->edition()->associate($request->edition);
         $product->level()->associate($request->level);
         $product->note = $request->note;
-        $product->forSale = $request->forSale === 'true'? true: false;;
+        $product->forSale = $request->forSale;
         $product->tradeMethod = $request->tradeMethod;
         $product->quotedMethod = $request->quotedMethod;
         $product->description = $request->description;
@@ -106,6 +106,7 @@ class ProductController extends Controller
         ->with('sizes')
         ->with('frontImage')
         ->with('backImage')
+        ->with('levelImages')
         ->with('otherImages')
         ->with('loaImages')
         ->findOrFail($id);
@@ -131,6 +132,7 @@ class ProductController extends Controller
      ->with('frontImage')
      ->with('backImage')
      ->with('otherImages')
+     ->with('levelImages')
      ->with('loaImages')
      ->where('user_id', $id)
      ->get();
@@ -155,9 +157,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $product = Product::findOrFail($id);
+        $product->price = $request->price;
+        $product->forSale = $request->forSale;
+        $product->tradeMethod = $request->tradeMethod;
+        $product->quotedMethod = $request->quotedMethod;
+        $product->save();
+        return $product;
     }
 
     /**
@@ -168,6 +177,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        // return $id;
         $product = Product::find($id);
         $product->delete();
         return response()->json('产品删除成功', 200);
