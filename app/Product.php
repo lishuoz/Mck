@@ -63,7 +63,7 @@ class Product extends Model
     }
 
     public function saleStatus(){
-        return $this->hasOne('App\saleStatus');
+        return $this->hasOne('App\SaleStatus');
     }
     
     public static function withAllRelations() {
