@@ -26,10 +26,23 @@ Route::post('/test', function(Request $request){
 
 Route::get('/test', function(Request $request){
 	// $product = Product::with()
-	return response(200);
-
+	Storage::disk('s3')->delete('3/th_front_7b9a43d697451c2bf430e18d69e12f64');
 });
 
+Route::post('/front-image/{id}', 'ImageController@storeFrontImage');
+Route::delete('/front-image/{id}', 'ImageController@deleteFrontImage');
+
+Route::post('/back-image/{id}', 'ImageController@storeBackImage');
+Route::delete('/back-image/{id}', 'ImageController@deleteBackImage');
+
+Route::post('/level-image/{id}', 'ImageController@storeLevelImages');
+Route::delete('/level-image/{id}/{fileName}', 'ImageController@deleteLevelImage');
+
+Route::post('/loa-image/{id}', 'ImageController@storeLoaImages');
+Route::delete('/loa-image/{id}/{fileName}', 'ImageController@deleteLoaImage');
+
+Route::post('/other-image/{id}', 'ImageController@storeOtherImages');
+Route::delete('/other-image/{id}/{fileName}', 'ImageController@deleteOtherImage');
 
 Route::post('/product-images', 'ImageController@storeProductImages');
 Route::post('/additional-images', 'ImageController@storeAdditionalImages');
@@ -56,6 +69,8 @@ Route::patch('/products/{id}', 'ProductController@update');
 Route::delete('/products/{id}', 'ProductController@destroy');
 
 Route::post('/products', 'ProductController@store');
+Route::post('/products/sale-status', 'ProductController@storeSaleStatus');
+
 // Route::post('/products', function(Request $request){
 // 	return $request->all();
 // });
@@ -71,7 +86,7 @@ Route::get('/teams', function (Request $request) {
 });
 
 Route::get('/seasons', function (Request $request) {
-	return App\Season::all();
+	return App\Season::orderBy('id', 'DESC')->get();
 });
 
 Route::get('/editions', function (Request $request) {

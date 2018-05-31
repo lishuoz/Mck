@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     { 
-        $editons = array ('主场/联盟款', '客场/标志款', '第二主客/主张款', '城市款', '复古款', '特殊款');
+        $editons = array ('主场/联盟款', '客场/经典配色款', '第二主客/主题款', '荣耀款/城市款', '复古款', '特殊款');
         $short_names = array('home', 'road', 'alt', 'city', 'throwback','special');
 
         for ($x = 0; $x < count($editons); $x++) {
@@ -66,7 +66,7 @@ for ($x = 0; $x < count($seasons); $x++) {
     ]);
 }
 
-$levels = array('比赛使用（ 已图片匹配 ）', '比赛使用', '比赛备用', '比赛/球队/工厂流出', '市售Pro-Cut', '活动使用（ 已图片匹配 ）', '活动使用/备用', '训练使用（ 已图片匹配 ）', '训练使用/备用');
+$levels = array('比赛使用（已图片匹配）', '比赛使用（渠道证明）', '比赛备用（渠道证明）', '比赛/球队/工厂流出', '市售Pro-Cut', '活动使用（已图片匹配）', '活动使用/备用', '训练使用（已图片匹配）', '训练使用/备用');
 $short_names = array( 'gu-match', 'gu', 'gi', 'pc', 'retail-pc', 'eu-match', 'eu-ei', 'pu-match', 'pu-pi');
 
 

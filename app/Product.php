@@ -61,5 +61,13 @@ class Product extends Model
     public function otherImages(){
         return $this->hasMany('App\OtherImage');        
     }
+
+    public function saleStatus(){
+        return $this->hasOne('App\saleStatus');
+    }
     
+    public static function withAllRelations() {
+        return static::with('frontImage', 'backImage', 'levelImages', 'loaImages', 'otherImages');
+    }
+
 }

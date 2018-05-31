@@ -64,19 +64,12 @@ class ProductController extends Controller
         //     'note' => 'string|max:255',
         //     'description' => 'string|max:255',
         // ]);
-
         $product = new Product;
-        if ($request->has('price')){
-            $product->price = $request->price;
-        }
         $product->user_id = $request->userId;
         $product->team()->associate($request->team);
         $product->edition()->associate($request->edition);
         $product->level()->associate($request->level);
         $product->note = $request->note;
-        $product->forSale = $request->forSale;
-        $product->tradeMethod = $request->tradeMethod;
-        $product->quotedMethod = $request->quotedMethod;
         $product->description = $request->description;
         $product->save();
         $product->players()->attach($request->players);
@@ -85,6 +78,26 @@ class ProductController extends Controller
         $product->items()->attach($request->items);
         $product->loas()->attach($request->loas);
         return $product;
+    }
+
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+      public function storeSaleStatus(Request $request)
+      {
+        // return $request->all();
+        $product = Product::findOrFail($request->productId);
+        $product->saleStatus()->create([
+            'product_id' => $request->productId,
+            'forSale' => $request->forSale,
+            'tradeMethod' => $request->tradeMethod,
+            'quotedMethod' => $request->quotedMethod,
+            'price' => $request->price
+        ]);
+        return response(200);
     }
 
     /**
@@ -104,6 +117,7 @@ class ProductController extends Controller
         ->with('level')
         ->with('loas')
         ->with('sizes')
+        ->with('saleStatus')
         ->with('frontImage')
         ->with('backImage')
         ->with('levelImages')
@@ -161,10 +175,16 @@ class ProductController extends Controller
     {
         $id = $request->id;
         $product = Product::findOrFail($id);
-        $product->price = $request->price;
-        $product->forSale = $request->forSale;
-        $product->tradeMethod = $request->tradeMethod;
-        $product->quotedMethod = $request->quotedMethod;
+        $product->team()->associate($request->team);
+        $product->edition()->associate($request->edition);
+        $product->level()->associate($request->level);
+        $product->note = $request->note;
+        $product->description = $request->description;
+        $product->players()->sync($request->players);
+        $product->seasons()->sync($request->seasons);
+        $product->sizes()->sync($request->sizes);
+        $product->items()->sync($request->items);
+        $product->loas()->sync($request->loas);
         $product->save();
         return $product;
     }

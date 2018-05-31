@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class FrontImage extends Model
 {
 	protected $fillable = [
-		'thumbnail_path', 'small_path', 'medium_path', 'large_path'
+		'name', 'thumbnail_path', 'small_path', 'medium_path', 'large_path'
 	];
 }
