@@ -67,7 +67,22 @@ class Product extends Model
     }
     
     public static function withAllRelations() {
-        return static::with('frontImage', 'backImage', 'levelImages', 'loaImages', 'otherImages');
+        return static::with(
+            'players',
+            'team',
+            'seasons',
+            'items',
+            'edition',
+            'level',
+            'loas',
+            'sizes',
+            'frontImage',
+            'backImage',
+            'levelImages',
+            'loaImages',
+            'otherImages',
+            'saleStatus'
+        );
     }
 
 }

@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->foreign('level_id')->references('id')->on('levels');
             $table->string('note')->nullable();
             $table->text('description')->nullable();
-            $table->string('status')->default('incomplete');
+            $table->string('status')->default('unverified');
             $table->timestamps();
         });
     }

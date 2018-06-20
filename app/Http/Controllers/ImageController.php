@@ -46,6 +46,8 @@ class ImageController extends Controller
 
 	public function deleteFrontImage($id){
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		Storage::disk('s3')->deleteDirectory($id . '/frontImage');
 		$product->frontImage()->delete();
 		return $product::withAllRelations()->find($id);
@@ -55,7 +57,8 @@ class ImageController extends Controller
 	public function storeBackImage(Request $request, $id){
 		$s3 = Storage::disk('s3');
 		$product = Product::findOrFail($id);
-
+		$product->status = 'unverified';
+		$product->save();
 		$backImage = $request->file;
 		$backName = md5($backImage->getClientOriginalName() . time());
 
@@ -89,6 +92,8 @@ class ImageController extends Controller
 
 	public function deleteBackImage($id){
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		Storage::disk('s3')->deleteDirectory($id . '/backImage');
 		$product->backImage()->delete();
 		return $product::withAllRelations()->find($id);
@@ -97,6 +102,8 @@ class ImageController extends Controller
 	public function storeLevelImages(Request $request, $id){
 		$s3 = Storage::disk('s3');
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		$levelImages = $request->file;
 		foreach($levelImages as $levelImage){
 			$levelName = md5($levelImage->getClientOriginalName() . time());
@@ -132,6 +139,8 @@ class ImageController extends Controller
 
 	public function deleteLevelImage($id, $fileName){
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		Storage::disk('s3')->deleteDirectory($id . '/levelImages/'.$fileName);
 		$product->levelImages()->where('name', $fileName)->delete();
 		return $product::withAllRelations()->find($id);
@@ -140,6 +149,8 @@ class ImageController extends Controller
 	public function storeLoaImages(Request $request, $id){
 		$s3 = Storage::disk('s3');
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		$loaImages = $request->file;
 		foreach($loaImages as $loaImage){
 			$loaName = md5($loaImage->getClientOriginalName() . time());
@@ -175,6 +186,8 @@ class ImageController extends Controller
 
 	public function deleteLoaImage($id, $fileName){
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		Storage::disk('s3')->deleteDirectory($id . '/loaImages/'.$fileName);
 		$product->loaImages()->where('name', $fileName)->delete();
 		return $product::withAllRelations()->find($id);
@@ -183,6 +196,8 @@ class ImageController extends Controller
 	public function storeOtherImages(Request $request, $id){
 		$s3 = Storage::disk('s3');
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		$otherImages = $request->file;
 		foreach($otherImages as $otherImage){
 			$otherName = md5($otherImage->getClientOriginalName() . time());
@@ -218,6 +233,8 @@ class ImageController extends Controller
 
 	public function deleteOtherImage($id, $fileName){
 		$product = Product::findOrFail($id);
+		$product->status = 'unverified';
+		$product->save();
 		Storage::disk('s3')->deleteDirectory($id . '/otherImages/'.$fileName);
 		$product->otherImages()->where('name', $fileName)->delete();
 		return $product::withAllRelations()->find($id);

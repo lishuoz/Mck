@@ -104,6 +104,14 @@ for ($x = 0; $x < count($sizes); $x++) {
     ]);
 }
 
+$roles = array ('管理员', '用户', '高级用户');
+
+for ($x = 0; $x < count($roles); $x++) {
+    Role::create([
+        'name' => $roles[$x]
+    ]);
+}
+
 
 }
 }

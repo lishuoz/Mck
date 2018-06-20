@@ -13,14 +13,13 @@
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
-Route::get('/test', function () {
-	echo "123";
-	$s3 = Storage::disk('s3');
-	$s3->put('myfile.txt', 'This is a dummy file for s3', 'public');
-});
+Route::middleware(['admin'])->get('/pool', 'ProductController@showPool');
+Route::middleware(['admin'])->get('/pool/{id}', 'ProductController@showPoolDetail');
+Route::middleware(['admin'])->patch('/productStatus/{id}', 'ProductController@updateProductStatus');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

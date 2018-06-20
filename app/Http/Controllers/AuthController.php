@@ -23,9 +23,9 @@ class AuthController extends Controller
 			'name' => $request->name,
 			'email' => $request->email,
 			'password' => bcrypt($request->password),
-			'token' => $token
+			'token' => $token,
 		]);
-
+        $user->roles()->attach(2);
 		// Mail::to($user)->send(new RegisterConfirmation($token));
 
 		return response()->json($user, 200);

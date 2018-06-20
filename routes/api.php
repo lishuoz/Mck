@@ -66,11 +66,15 @@ Route::patch('/products/{id}', 'ProductController@update');
 // 		print_r($request->all());
 // });
 
+Route::patch('/products/status/{id}', 'ProductController@updateStatus');
 Route::delete('/products/{id}', 'ProductController@destroy');
 
 Route::post('/products', 'ProductController@store');
 Route::post('/products/sale-status', 'ProductController@storeSaleStatus');
-
+Route::put('/products/sale-status', 'ProductController@updateSaleStatus');
+// Route::put('/products/sale-status', function(Request $request){
+// 	return 'hah';
+// });
 // Route::post('/products', function(Request $request){
 // 	return $request->all();
 // });

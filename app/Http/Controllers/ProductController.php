@@ -6,6 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;;
+use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends Controller
 {
@@ -16,18 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::with('user')
-        ->with('team')
-        ->with('players')
-        ->with('seasons')
-        ->with('items')
-        ->with('edition')
-        ->with('level')
-        ->with('loas')
-        ->with('sizes')
-        ->with('frontImage')
-        ->with('backImage')
-        ->where('status', 'active')
+        return Product::withAllRelations()
+        ->with('user')
+        ->where('status', 'approved')
         ->get();
     }
 
@@ -95,7 +87,29 @@ class ProductController extends Controller
             'forSale' => $request->forSale,
             'tradeMethod' => $request->tradeMethod,
             'quotedMethod' => $request->quotedMethod,
-            'price' => $request->price
+            'price' => $request->price,
+            'status' => 'complete',
+        ]);
+        return response(200);
+    }
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+     public function updateSaleStatus(Request $request)
+     {  
+        // return ($request->all());
+        $product = Product::findOrFail($request->productId);
+        $product->saleStatus()->update([
+            'product_id' => $request->productId,
+            'forSale' => $request->forSale,
+            'tradeMethod' => $request->tradeMethod,
+            'quotedMethod' => $request->quotedMethod,
+            'price' => $request->price,
+            'status' => 'complete',
         ]);
         return response(200);
     }
@@ -107,22 +121,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        return Product::with('user')
-        ->with('team')
-        ->with('players')
-        ->with('seasons')
-        ->with('items')
-        ->with('edition')
-        ->with('level')
-        ->with('loas')
-        ->with('sizes')
-        ->with('saleStatus')
-        ->with('frontImage')
-        ->with('backImage')
-        ->with('levelImages')
-        ->with('otherImages')
-        ->with('loaImages')
+    {   
+        return Product::withAllRelations()
+        ->with('user')
         ->findOrFail($id);
     }
 
@@ -134,24 +135,12 @@ class ProductController extends Controller
      */
     public function getUserProducts($id)
     {
-     $products = Product::with('user')
-     ->with('team')
-     ->with('players')
-     ->with('seasons')
-     ->with('items')
-     ->with('edition')
-     ->with('level')
-     ->with('loas')
-     ->with('sizes')
-     ->with('frontImage')
-     ->with('backImage')
-     ->with('otherImages')
-     ->with('levelImages')
-     ->with('loaImages')
-     ->where('user_id', $id)
-     ->get();
-     return $products;
- }
+        $products = Product::withAllRelations()
+        ->with('user')
+        ->where('user_id', $id)
+        ->get();
+        return $products;
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -163,6 +152,23 @@ class ProductController extends Controller
     {
         //
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request)
+    {
+        $id = $request->id;
+        $product = Product::findOrFail($id);
+        $product->status = 'pending';
+        $product->save();
+        return $product;
+    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -185,6 +191,7 @@ class ProductController extends Controller
         $product->sizes()->sync($request->sizes);
         $product->items()->sync($request->items);
         $product->loas()->sync($request->loas);
+        $product->status = 'unverified';
         $product->save();
         return $product;
     }
@@ -201,5 +208,25 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
         return response()->json('产品删除成功', 200);
+    }
+
+    public function showPool(){
+        $products = Product::withAllRelations()->with('user')->where('status', 'pending')->get();
+        return view('pool', ['products' => $products]);
+    }
+
+    public function showPoolDetail($id){
+        $product = Product::withAllRelations()
+        ->with('user')
+        ->findOrFail($id);
+        return view('pool-detail', ['product' => $product]);
+    }
+
+    public function updateProductStatus(Request $request, $id){
+        $product = Product::findOrFail($id);
+        $product->status = $request->status;
+        $product->save();
+        $products = Product::withAllRelations()->with('user')->where('status', 'pending')->get();
+        return Redirect::to('/pool');
     }
 }
