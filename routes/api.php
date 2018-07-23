@@ -19,15 +19,15 @@ Route::post('/upload-image', function(Request $request){
 	return response()->json('images uploaded successfully', 200);
 });
 
-
 Route::post('/test', function(Request $request){
 	return print_r($request->all());
 });
 
 Route::get('/test', function(Request $request){
-	// $product = Product::with()
-	Storage::disk('s3')->delete('3/th_front_7b9a43d697451c2bf430e18d69e12f64');
+	return 'dashabi';
 });
+
+
 
 Route::post('/front-image/{id}', 'ImageController@storeFrontImage');
 Route::delete('/front-image/{id}', 'ImageController@deleteFrontImage');
@@ -58,13 +58,13 @@ Route::middleware(['auth:api'])->get('/user', function (Request $request) {
 });
 
 Route::post('/register', 'AuthController@register');
+Route::post('/login', 'AuthController@login');
+Route::post('/logout', 'AuthController@logout');
+
 
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{id}', 'ProductController@show');
 Route::patch('/products/{id}', 'ProductController@update');
-// Route::patch('/products/edit', function(Request $request){
-// 		print_r($request->all());
-// });
 
 Route::patch('/products/status/{id}', 'ProductController@updateStatus');
 Route::delete('/products/{id}', 'ProductController@destroy');
@@ -72,12 +72,6 @@ Route::delete('/products/{id}', 'ProductController@destroy');
 Route::post('/products', 'ProductController@store');
 Route::post('/products/sale-status', 'ProductController@storeSaleStatus');
 Route::put('/products/sale-status', 'ProductController@updateSaleStatus');
-// Route::put('/products/sale-status', function(Request $request){
-// 	return 'hah';
-// });
-// Route::post('/products', function(Request $request){
-// 	return $request->all();
-// });
 
 Route::post('/images', 'ImageController@store');
 

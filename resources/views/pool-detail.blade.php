@@ -2,23 +2,57 @@
 
 @section('content')
 <div class="container">
-	<h2>基本信息</h2>
+	<h2>属性</h2>
 	<h6>
+	<div>球员：
 		@foreach($product->players as $player)
 		<span>{{$player->name}} </span>
 		@endforeach
+	</div>
+
+	<div>赛季：
 		@foreach($product->seasons as $season)
 		<span>{{$season->name}}</span>
 		@endforeach
+	</div>
+	<div>球队：
 		<span>{{$product->team->name}} </span>
+	</div>
+	
+	<div>等级：
 		<span>{{$product->level->name}} </span>
+	</div>
+
+	<div>物品：	
 		@foreach($product->items as $item)
 		<span>{{$item->name}} </span>
 		@endforeach
+	</div>
+
+	<div>款式：
+		<span>{{$product->edition->name}} </span>
+	</div>
+
+	<div>证书：
 		@foreach($product->loas as $loa)
 		<span>{{$loa->name}} </span>
 		@endforeach
+	</div>
+
+	<div>尺寸：
+		@foreach($product->sizes as $size)
+		<span>{{$size->name}} </span>
+		@endforeach
+	</div>
+
+	<div>备注：
 		<span>{{$product->note}}</span>
+	</div>
+	</h6>
+	<hr>
+	<h2>描述</h2>
+	<h6>
+		{{$product->description}}
 	</h6>
 	<hr>
 	<h2>状态</h2>
@@ -77,6 +111,9 @@
 		<img src="{{$otherImage->large_path}}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
 	</div>
 	@endforeach
+
+	<hr>
+	<h3>操作</h3>
 	<form action="/productStatus/{{$product->id}}" method="post">
 		@csrf
 		@method('PATCH')

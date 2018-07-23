@@ -29,7 +29,11 @@ class AuthServiceProvider extends ServiceProvider
 
         Route::group(['middleware' => 'cors'], function() {
             Passport::routes();
+            Passport::enableImplicitGrant();
         });
+
+        
+
 
     }
 }

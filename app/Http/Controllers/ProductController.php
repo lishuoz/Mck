@@ -20,6 +20,7 @@ class ProductController extends Controller
         return Product::withAllRelations()
         ->with('user')
         ->where('status', 'approved')
+        ->orderBy('created_at', 'DESC')
         ->get();
     }
 
