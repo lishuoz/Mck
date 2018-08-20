@@ -107,4 +107,4 @@ Route::get('/loas', function (Request $request) {
 	return App\Loa::all();
 });
 
-
+Route::get('/jerseyzoneone', 'ProductController@jerseyZoneOne');

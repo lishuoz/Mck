@@ -230,4 +230,13 @@ class ProductController extends Controller
         $products = Product::withAllRelations()->with('user')->where('status', 'pending')->get();
         return Redirect::to('/pool');
     }
+
+    public function jerseyZoneOne(){
+        $result = array();
+        $ids = [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 65, 66];
+        foreach ($ids as $id) {
+            array_push($result,$this->show($id));
+        }
+        return $result;
+    }
 }
