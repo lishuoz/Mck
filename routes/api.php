@@ -108,3 +108,4 @@ Route::get('/loas', function (Request $request) {
 });
 
 Route::get('/jerseyzoneone', 'ProductController@jerseyZoneOne');
+Route::get('/jerseyzonetwo', 'ProductController@jerseyZoneTwo');

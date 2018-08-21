@@ -239,4 +239,13 @@ class ProductController extends Controller
         }
         return $result;
     }
+
+    public function jerseyZoneTwo(){
+        $result = array();
+        $ids = [48, 49, 50, 51, 52];
+        foreach ($ids as $id) {
+            array_push($result,$this->show($id));
+        }
+        return $result;
+    }
 }
